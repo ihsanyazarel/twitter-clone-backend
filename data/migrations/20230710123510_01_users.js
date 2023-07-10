@@ -12,8 +12,8 @@ exports.up = function(knex) {
         users.string('userEmail', 128).notNullable().unique()
         users.string('password', 128).notNullable()
         users.string('role').notNullable().defaultTo('User')
-        users.integer("numberOfFollowers")
-        users.integer("numberOfFollowing")
+        users.integer("numberOfFollowers").defaultTo(0);
+        users.integer("numberOfFollowing").defaultTo(0);
         users.timestamp("signUpDate").defaultTo(knex.fn.now());
     })
 };
