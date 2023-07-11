@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const morgan = require("morgan");
 const authRouter = require("./auth/auth-router");
+const usersRouter = require("./users/users-router");
 
 // global mw
 server.use(express.json());
@@ -19,6 +20,7 @@ server.get("/", (req,res)=>{
 })
 
 server.use("/api/auth", authRouter);
+server.use("/api/users", usersRouter);
 
 
 // error mw

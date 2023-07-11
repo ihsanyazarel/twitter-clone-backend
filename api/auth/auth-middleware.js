@@ -1,7 +1,6 @@
 const db = require("../../data/data-config");
 const bcyrptjs = require("bcryptjs");
 const userModel = require("../users/users-model");
-const {JWT_SECRET} = require("../../config/index");
 
 const registerPayloadVld = (req, res, next) => {
     try {
@@ -33,8 +32,6 @@ const loginPayloadVld = (req, res, next) => {
 const passwordVld = async (req, res, next) => {
     try {
         const user = await userModel.findUserByKey(req.userKey);
-        // console.log(user);
-        // console.log(bcyrptjs.compareSync(req.body.password, user.password));
         if(bcyrptjs.compareSync(req.body.password, user.password)){
             req.user = user;
             next();
