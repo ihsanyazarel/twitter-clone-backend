@@ -5,7 +5,8 @@ const findUserByKey = (key, value) => {
 }
 
 const getAllUsers = ()=>{
-    return db("Users").select("user_id", "nickName", "userName", "userSurname", "userEmail", "numberOfFollowers", "numberOfFollowing", "signUpDate")
+    return db("Users")
+    .select("user_id", "nickName", "userName", "userSurname", "userEmail", "numberOfFollowers", "numberOfFollowing", "signUpDate")
 }
 
 const getUserById = (id)=>{
