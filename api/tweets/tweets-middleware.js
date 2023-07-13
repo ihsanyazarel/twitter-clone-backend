@@ -19,7 +19,9 @@ const pyldVld = (req,res,next) => {
         const allowedKeys = ["tweetContent", "numberOfLikes", "numberOfComments"];
         const sentAllowedKeys = Object.keys(req.body).filter(key => allowedKeys.includes(key));
         if(sentAllowedKeys.length > 0){
-            const newTweet = {};
+            const newTweet = {
+                updated_at: new Date().toISOString().replace("T", " ").slice(0,19)
+            };
             sentAllowedKeys.forEach(item => {
                 newTweet[item] = req.body[item];
             });
