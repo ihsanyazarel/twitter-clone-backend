@@ -10,7 +10,8 @@ const tokenGenerator = (user) => {
         user_id: user.user_id,
         nickName: user.nickName,
         userName: user.userName,
-        userSurname: user.userSurname
+        userSurname: user.userSurname,
+        role: user.role
     };
     const token = jwt.sign(newUser, JWT_SECRET, { expiresIn: "3h" });
     return token;
@@ -45,7 +46,7 @@ router.post("/password/reset",  (req,res,next) => {
 });
 router.get("/logout", (req,res,next) => {
     try {
-        res.json({message: "router.post(/logout)"})
+        res.json({message: "Logout başarılı"})
     } catch (error) {
         next(error);
     }

@@ -9,6 +9,7 @@ const authRouter = require("./auth/auth-router");
 const usersRouter = require("./users/users-router");
 const tweetsRouter = require("./tweets/tweets-router");
 const commentsRouter = require("./comments/comments-router");
+const { restricted } = require("./auth/auth-middleware");
 
 // global mw
 server.use(express.json());
@@ -22,9 +23,9 @@ server.get("/", (req,res)=>{
 })
 
 server.use("/api/auth", authRouter);
-server.use("/api/users", usersRouter);
-server.use("/api/tweets", tweetsRouter);
-server.use("/api/comments", commentsRouter);
+server.use("/api/users", restricted, usersRouter);
+server.use("/api/tweets", restricted, tweetsRouter);
+server.use("/api/comments", restricted, commentsRouter);
 
 
 // error mw

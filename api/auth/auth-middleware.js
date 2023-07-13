@@ -1,6 +1,8 @@
 const db = require("../../data/data-config");
 const bcyrptjs = require("bcryptjs");
 const userModel = require("../users/users-model");
+const jwt = require("jsonwebtoken");
+const {JWT_SECRET} = require("../../config/index");
 
 const registerPayloadVld = (req, res, next) => {
     try {
@@ -75,10 +77,31 @@ const isEmailExistInDb = async (req, res, next) => {
     }
 }
 
+const restricted = (req,res,next) => {
+    try {
+        const sentToken = req.headers.authorization;
+        if(sentToken){
+            jwt.verify(sentToken, JWT_SECRET, (err, decodedToken) => {
+            if(err){
+                res.status(400).json({message: "Token geçersiz!"})
+            } else {
+                req.decodedToken = decodedToken;
+                next()
+                console.log(req.decodedToken);
+            }
+        })} else {
+            res.status(400).json({message: "Token bilgisi gereklidir!"})
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     registerPayloadVld,
     isNickNameExistInDb,
     isEmailExistInDb,
     loginPayloadVld,
-    passwordVld
+    passwordVld,
+    restricted
 }
