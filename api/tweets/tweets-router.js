@@ -40,7 +40,7 @@ router.get("/home/:id",userMw.idValidation, async (req,res,next)=>{
     }
 })
 // update tweet
-router.post("/:id",tweetsMw.idValidation, tweetsMw.pyldVld, async (req,res,next)=>{
+router.put("/:id",tweetsMw.idValidation, tweetsMw.pyldVld, async (req,res,next)=>{
     try {
         const tweet = await updateTweet(req.params.id, req.newTweet);
         res.json(tweet);
@@ -57,8 +57,8 @@ router.delete("/:id",tweetsMw.idValidation, async (req,res,next)=>{
         next(error)
     }
 })
-
-router.put("/",tweetsMw.createPyldVld, async (req,res,next)=>{
+// create tweet
+router.post("/",tweetsMw.createPyldVld, async (req,res,next)=>{
     try {
         const tweet = await createTweet(req.newTweet);
         res.json(tweet);

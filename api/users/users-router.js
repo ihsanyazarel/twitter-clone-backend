@@ -29,7 +29,7 @@ router.get("/:id",idValidation, async (req,res,next)=>{
     }
 })
 // update user
-router.post("/:id",pyldVld,idValidation, async (req,res,next)=>{
+router.put("/:id",pyldVld,idValidation, async (req,res,next)=>{
     try {
         const user = await updateUser(req.params.id, req.newUser);
         res.json(user);
