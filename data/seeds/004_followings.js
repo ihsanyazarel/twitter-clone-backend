@@ -9,39 +9,39 @@ exports.seed = async function(knex) {
     return knex('Followings').insert([
       {
         user_id: 1,
-        followingId: 2
+        following_id: 2
       },
       {
         user_id: 1,
-        followingId: 4
+        following_id: 4
       },
       {
         user_id: 2,
-        followingId: 5
+        following_id: 5
       },
       {
         user_id: 2,
-        followingId: 3
+        following_id: 3
       },
       {
         user_id: 3,
-        followingId: 2
+        following_id: 2
       },
       {
         user_id: 3,
-        followingId: 1
+        following_id: 1
       },
       {
         user_id: 4,
-        followingId: 3
+        following_id: 3
       },
       {
         user_id: 4,
-        followingId: 2
+        following_id: 2
       },
       {
         user_id: 5,
-        followingId: 4
+        following_id: 4
       },
     ]);
   });
