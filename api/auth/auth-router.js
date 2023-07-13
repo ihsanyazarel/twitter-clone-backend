@@ -19,9 +19,18 @@ const tokenGenerator = (user) => {
 
 router.post("/register", authMw.registerPayloadVld, authMw.isNickNameExistInDb,authMw.isEmailExistInDb, async (req,res,next) => {
     try {
-        let user = req.body;
+        let user = {
+            nickName: req.body.nickName,
+            password: req.body.password,
+            userEmail: req.body.userEmail,
+            userName: req.body.userName,
+            userSurname: req.body.userSurname,
+            secretQuestion: req.body.secretQuestion
+        }; 
         const hashedPassword = bcyrptjs.hashSync(user.password, 10);
+        const hashedSecretQuestion = bcyrptjs.hashSync(user.secretQuestion, 10);
         user.password = hashedPassword;
+        user.secretQuestion = hashedSecretQuestion;
         await db("Users").insert(user);
         res.json({message: "Kullanıcı başarı ile kaydedildi..."})
     } catch (error) {
@@ -37,9 +46,18 @@ router.post("/login", authMw.loginPayloadVld, authMw.passwordVld, async (req,res
         next(error);
     }
 });
-router.post("/password/reset",  (req,res,next) => {
+router.post("/password/reset", async (req,res,next) => {
     try {
-        res.json({message: "router.post(/password/reset)"})
+        const user = await db("Users").where("userEmail", req.body.userEmail).first();
+        const verified = bcyrptjs.compareSync(req.body.secretQuestion, user.secretQuestion);
+        if(verified){
+            const hashedPassword = bcyrptjs.hashSync(req.body.password, 10);
+            user.password = hashedPassword;
+            await db("Users").where("userEmail", req.body.userEmail).update(user);
+            res.json({message: "Şifre başarılı bir şekilde değiştirilmiştir..."});
+        }else {
+            res.json({message: "Gizli soru yanlış!"})
+        }
     } catch (error) {
         next(error);
     }
