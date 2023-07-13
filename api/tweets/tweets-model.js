@@ -27,11 +27,11 @@ const getTweetsOfUserWithFollowings = async (userId)=>{
     return tweets;
 }
 
-const updateTweet = async (twee_id, tweet) => {
+const updateTweet = async (tweet_id, tweet) => {
     await db('Tweets')
-    .where('tweet_id', twee_id)
+    .where('tweet_id', tweet_id)
     .update(tweet);
-    return getTweetById(twee_id);
+    return getTweetById(tweet_id);
 }
 
 async function deleteTweet(tweet_id) {
@@ -41,6 +41,11 @@ async function deleteTweet(tweet_id) {
     .del();
     return tweet;
 }
+const createTweet = async (tweet) => {
+    const [tweet_id] = await db('Tweets')
+    .insert(tweet);
+    return getTweetById(tweet_id);
+}
 
 module.exports = {
     getAllTweets,
@@ -48,5 +53,6 @@ module.exports = {
     getTweetsOfUser,
     getTweetsOfUserWithFollowings,
     updateTweet,
-    deleteTweet
+    deleteTweet,
+    createTweet
 }

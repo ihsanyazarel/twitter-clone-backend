@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { getAllTweets, getTweetById, getTweetsOfUser, getTweetsOfUserWithFollowings, updateTweet, deleteTweet } = require("./tweets-model");
+const { getAllTweets, getTweetById, getTweetsOfUser, getTweetsOfUserWithFollowings, updateTweet, deleteTweet, createTweet } = require("./tweets-model");
 const tweetsMw = require("./tweets-middleware");
 const userMw = require("../users/users-middleware");
 
@@ -52,6 +52,15 @@ router.post("/:id",tweetsMw.idValidation, tweetsMw.pyldVld, async (req,res,next)
 router.delete("/:id",tweetsMw.idValidation, async (req,res,next)=>{
     try {
         const tweet = await deleteTweet(req.params.id);
+        res.json(tweet);
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.put("/",tweetsMw.createPyldVld, async (req,res,next)=>{
+    try {
+        const tweet = await createTweet(req.newTweet);
         res.json(tweet);
     } catch (error) {
         next(error)
