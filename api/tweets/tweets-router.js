@@ -12,7 +12,7 @@ router.get("/", async (req,res,next)=>{
         next(error)
     }
 })
-// get tweet bt tweet_id
+// get tweet by tweet_id
 router.get("/:id",tweetsMw.idValidation, async (req,res,next)=>{
     try {
         const tweet = await getTweetById(req.params.id);
