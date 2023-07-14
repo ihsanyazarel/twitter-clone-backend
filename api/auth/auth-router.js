@@ -13,7 +13,7 @@ const tokenGenerator = (user) => {
         userSurname: user.userSurname,
         role: user.role
     };
-    const token = jwt.sign(newUser, JWT_SECRET, { expiresIn: "3h" });
+    const token = jwt.sign(newUser, JWT_SECRET, { expiresIn: "1h" });
     return token;
 }
 
@@ -62,8 +62,16 @@ router.post("/password/reset", async (req,res,next) => {
         next(error);
     }
 });
-router.get("/logout", (req,res,next) => {
+router.get("/logout", authMw.restricted, async (req,res,next) => {
     try {
+        // await db("TokenBlackList").insert({token: req.headers.authorization});
+        const tokenSecret = req.headers.authorization.split(".")[2];
+        authMw.tokenBlackList.push(tokenSecret);
+        const timeOut = (Number(req.decodedToken.exp)*1000)- Number(new Date().getTime());
+        setTimeout(async () => {
+            authMw.tokenBlackList = authMw.tokenBlackList.filter(item => item !== tokenSecret);
+            // await db("TokenBlackList").where("token", req.headers.authorization).delete();
+        }, timeOut);
         res.json({message: "Logout başarılı"})
     } catch (error) {
         next(error);
