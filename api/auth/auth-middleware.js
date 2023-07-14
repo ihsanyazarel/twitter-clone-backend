@@ -6,25 +6,9 @@ const { JWT_SECRET } = require("../../config/index");
 const tokenBlackList = [];
 const registerPayloadVld = (req, res, next) => {
   try {
-    const {
-      nickName,
-      userEmail,
-      userName,
-      userSurname,
-      password,
-      secretQuestion,
-    } = req.body;
-    if (
-      !nickName ||
-      !userEmail ||
-      !password ||
-      !userName ||
-      !userSurname ||
-      !secretQuestion
-    ) {
-      res
-        .status(400)
-        .json({ message: "Kullanıcı bilgileri eksiksiz girilmelidir!" });
+    const {nickName, userEmail, userName, userSurname, password, secretQuestion} = req.body;
+    if (!nickName || !userEmail || !password || !userName || !userSurname || !secretQuestion) {
+      res.status(400).json({ message: "Kullanıcı bilgileri eksiksiz girilmelidir!" });
     } else {
       next();
     }
@@ -69,9 +53,7 @@ const loginPayloadVld = (req, res, next) => {
         .status(400)
         .json({ message: "Kullanıcı bilgileri eksiksiz girilmelidir!" });
     } else {
-      req.userKey = nickName
-        ? { nickName: nickName }
-        : { userEmail: userEmail };
+      req.userKey = nickName ? { nickName: nickName } : { userEmail: userEmail };
       next();
     }
   } catch (error) {
