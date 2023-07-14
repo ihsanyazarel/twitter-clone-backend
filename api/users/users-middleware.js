@@ -43,7 +43,7 @@ const isAdminOrLoggedInUser = (req,res,next)=>{
     } catch (error) {
         next(error)
     }
-}
+  }
 
 module.exports = {
     idValidation,

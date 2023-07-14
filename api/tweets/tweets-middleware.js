@@ -53,8 +53,21 @@ const createPyldVld = (req,res,next) => {
     }
 }
 
+const isAdminOrOwnTweet = (req,res,next)=>{
+    try {
+        if(req.decodedToken.role == "Admin" || req.tweet.user_id == req.decodedToken.user_id){
+           next()
+        } else {
+           res.status(400).json({message: "Yetkiniz yok!"})
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     idValidation,
     pyldVld,
-    createPyldVld
+    createPyldVld,
+    isAdminOrOwnTweet
 }

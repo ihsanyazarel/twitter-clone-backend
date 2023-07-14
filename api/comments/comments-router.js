@@ -2,10 +2,11 @@ const router = require("express").Router();
 const { getAllComments, getCommentById, getCommentsOfTweet, updateComment, deleteComment, createComment } = require("./comments-model");
 const commentsMw = require("./comments-middleware");
 const tweetsMw = require("../tweets/tweets-middleware");
+const { isAdmin } = require("../Auth/auth-middleware");
 
 
-// get all comments
-router.get("/", async (req,res,next)=>{
+// get all comments - available for just admin
+router.get("/", isAdmin, async (req,res,next)=>{
     try {
         const comments = await getAllComments();
         res.json(comments);
@@ -13,7 +14,7 @@ router.get("/", async (req,res,next)=>{
         next(error)
     }
 })
-// get comment by comment_id
+// get comment by comment_id - available for everyone
 router.get("/:id",commentsMw.idValidation, async (req,res,next)=>{
     try {
         const comment = await getCommentById(req.params.id);
@@ -22,7 +23,7 @@ router.get("/:id",commentsMw.idValidation, async (req,res,next)=>{
         next(error)
     }
 })
-// get comments of tweet by tweet_id
+// get comments of tweet by tweet_id - available for everyone
 router.get("/tweet/:id",tweetsMw.idValidation, async (req,res,next)=>{
     try {
         const comments = await getCommentsOfTweet(req.params.id);
@@ -32,8 +33,9 @@ router.get("/tweet/:id",tweetsMw.idValidation, async (req,res,next)=>{
     }
 })
 
-// update comment
-router.put("/:id",commentsMw.idValidation, commentsMw.pyldVld, async (req,res,next)=>{
+// update comment by comment_id
+// available for admin and user who own the comment
+router.put("/:id",commentsMw.idValidation, commentsMw.pyldVld, commentsMw.isAdminOrOwnComment, async (req,res,next)=>{
     try {
         const comment = await updateComment(req.params.id, req.newComment);
         res.json(comment);
@@ -42,7 +44,8 @@ router.put("/:id",commentsMw.idValidation, commentsMw.pyldVld, async (req,res,ne
     }
 })
 // delete comment by comment_id
-router.delete("/:id",commentsMw.idValidation, async (req,res,next)=>{
+// available for admin and user who own the comment
+router.delete("/:id",commentsMw.idValidation, commentsMw.isAdminOrOwnComment, async (req,res,next)=>{
     try {
         const comment = await deleteComment(req.params.id);
         res.json(comment);
@@ -50,8 +53,9 @@ router.delete("/:id",commentsMw.idValidation, async (req,res,next)=>{
         next(error)
     }
 })
-// create comment
-router.post("/:id",commentsMw.createPyldVld,tweetsMw.idValidation, async (req,res,next)=>{
+// create comment with tweet_id
+// available for everyone
+router.post("/:id",commentsMw.createPyldVld, tweetsMw.idValidation, async (req,res,next)=>{
     try {
         req.newComment.tweet_id = req.tweet.tweet_id;
         const comment = await createComment(req.newComment);

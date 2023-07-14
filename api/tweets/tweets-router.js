@@ -2,9 +2,10 @@ const router = require("express").Router();
 const { getAllTweets, getTweetById, getTweetsOfUser, getTweetsOfUserWithFollowings, updateTweet, deleteTweet, createTweet } = require("./tweets-model");
 const tweetsMw = require("./tweets-middleware");
 const userMw = require("../users/users-middleware");
+const { isAdmin } = require("../Auth/auth-middleware");
 
-// get all tweets
-router.get("/", async (req,res,next)=>{
+// get all tweets - available for just admin
+router.get("/", isAdmin, async (req,res,next)=>{
     try {
         const tweets = await getAllTweets();
         res.json(tweets);
@@ -12,7 +13,7 @@ router.get("/", async (req,res,next)=>{
         next(error)
     }
 })
-// get tweet by tweet_id
+// get tweet by tweet_id - available for everyone
 router.get("/:id",tweetsMw.idValidation, async (req,res,next)=>{
     try {
         const tweet = await getTweetById(req.params.id);
@@ -21,7 +22,7 @@ router.get("/:id",tweetsMw.idValidation, async (req,res,next)=>{
         next(error)
     }
 })
-// get tweets of user by user_id
+// get tweets of user by user_id - available for everyone
 router.get("/user/:id",userMw.idValidation, async (req,res,next)=>{
     try {
         const tweet = await getTweetsOfUser(req.params.id);
@@ -31,7 +32,8 @@ router.get("/user/:id",userMw.idValidation, async (req,res,next)=>{
     }
 })
 // Get tweets of user’s home by user_id(user’s tweets and followed user’s tweet)
-router.get("/home/:id",userMw.idValidation, async (req,res,next)=>{
+// available for admin and user who request with his/her own id
+router.get("/home/:id",userMw.idValidation, userMw.isAdminOrLoggedInUser, async (req,res,next)=>{
     try {
         const tweet = await getTweetsOfUserWithFollowings(req.params.id);
         res.json(tweet);
@@ -39,8 +41,9 @@ router.get("/home/:id",userMw.idValidation, async (req,res,next)=>{
         next(error)
     }
 })
-// update tweet
-router.put("/:id",tweetsMw.idValidation, tweetsMw.pyldVld, async (req,res,next)=>{
+// update tweet by tweet_id
+// available for admin and user who own the tweet
+router.put("/:id",tweetsMw.idValidation, tweetsMw.pyldVld,tweetsMw.isAdminOrOwnTweet, async (req,res,next)=>{
     try {
         const tweet = await updateTweet(req.params.id, req.newTweet);
         res.json(tweet);
@@ -49,7 +52,8 @@ router.put("/:id",tweetsMw.idValidation, tweetsMw.pyldVld, async (req,res,next)=
     }
 })
 // delete tweet by tweet_id
-router.delete("/:id",tweetsMw.idValidation, async (req,res,next)=>{
+// available for admin and user who own the tweet
+router.delete("/:id",tweetsMw.idValidation,tweetsMw.isAdminOrOwnTweet, async (req,res,next)=>{
     try {
         const tweet = await deleteTweet(req.params.id);
         res.json(tweet);

@@ -104,6 +104,19 @@ const restricted = (req, res, next) => {
   }
 };
 
+
+const isAdmin = (req,res,next)=>{
+  try {
+       if(req.decodedToken.role == "Admin"){
+          next()
+       } else {
+          res.status(400).json({message: "Yetkiniz yok!"})
+       }
+  } catch (error) {
+      next(error)
+  }
+}
+
 module.exports = {
   registerPayloadVld,
   isNickNameExistInDb,
@@ -112,4 +125,5 @@ module.exports = {
   passwordVld,
   restricted,
   tokenBlackList,
+  isAdmin
 };
