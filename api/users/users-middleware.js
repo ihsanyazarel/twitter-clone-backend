@@ -33,7 +33,20 @@ const pyldVld = (req,res,next) => {
     }
 }
 
+const isAdminOrLoggedInUser = (req,res,next)=>{
+    try {
+         if(req.decodedToken.role == "Admin" || req.params.id == req.decodedToken.user_id){
+            next()
+         } else {
+            res.status(400).json({message: "Yetkiniz yok!"})
+         }
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     idValidation,
     pyldVld,
+    isAdminOrLoggedInUser
 }

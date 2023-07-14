@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { idValidation, pyldVld } = require("./users-middleware");
+const { idValidation, pyldVld, isAdminOrLoggedInUser } = require("./users-middleware");
 const { getAllUsers, getUserWithTweets, getUserById, updateUser, deleteUser } = require("./users-model");
 // get all users
 router.get("/", async (req,res,next)=>{
@@ -29,7 +29,7 @@ router.get("/:id",idValidation, async (req,res,next)=>{
     }
 })
 // update user
-router.put("/:id",pyldVld,idValidation, async (req,res,next)=>{
+router.put("/:id",pyldVld,idValidation, isAdminOrLoggedInUser, async (req,res,next)=>{
     try {
         const user = await updateUser(req.params.id, req.newUser);
         res.json(user);
@@ -38,7 +38,7 @@ router.put("/:id",pyldVld,idValidation, async (req,res,next)=>{
     }
 })
 // delete user by id
-router.delete("/:id",idValidation, async (req,res,next)=>{
+router.delete("/:id",idValidation, isAdminOrLoggedInUser, async (req,res,next)=>{
     try {
         const user = await deleteUser(req.params.id);
         res.json(user);
