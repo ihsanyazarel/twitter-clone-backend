@@ -16,15 +16,16 @@ const getTweetsOfUser = async (userId)=>{
 }
 
 const getTweetsOfUserWithFollowings = async (userId)=>{
-    const tweets = await db("Tweets")
-    .where("user_id", userId);
-    const followingTweets = await db("Tweets as t")
-    .leftJoin("Followings as f", "f.following_id", "t.user_id")
-    .where("f.userId", userId);
-    followingTweets.forEach(item => {
-        tweets.push(item)
-    });
-    return tweets;
+    return db("Tweets as t")
+    .leftJoin('Followings as f', function() {
+        this.on('t.user_id', '=', 'f.following_id')
+        .andOn(db.raw("f.following_id <> ? ", [userId]))
+    })
+    .where(function() {
+        this.where('f.userId', '=', userId)
+        .orWhere('t.user_id', '=', userId)
+    })
+    .select("tweet_id", "user_id", "tweetContent", "numberOfLikes", "numberOfComments", "created_at", "updated_at")
 }
 
 const updateTweet = async (tweet_id, tweet) => {
