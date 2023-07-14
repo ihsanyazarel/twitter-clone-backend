@@ -37,7 +37,7 @@ const pyldVld = (req,res,next) => {
 // create comment
 const createPyldVld = (req,res,next) => {
     try {
-        const {commentContent, user_id} = req.body; 
+        const {commentContent} = req.body; 
         if(commentContent){
             const newComment = {
                 commentContent: req.body.commentContent,
