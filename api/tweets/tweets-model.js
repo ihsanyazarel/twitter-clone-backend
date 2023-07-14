@@ -20,7 +20,7 @@ const getTweetsOfUserWithFollowings = async (userId)=>{
     .where("user_id", userId);
     const followingTweets = await db("Tweets as t")
     .leftJoin("Followings as f", "f.following_id", "t.user_id")
-    .where("f.user_id", userId);
+    .where("f.userId", userId);
     followingTweets.forEach(item => {
         tweets.push(item)
     });

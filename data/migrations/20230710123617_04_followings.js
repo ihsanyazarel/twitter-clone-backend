@@ -5,7 +5,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable('Followings', followings => {
         followings.increments("id");
-        followings.integer("user_id").references("user_id").inTable("Users").onDelete("CASCADE").onUpdate("CASCADE")
+        followings.integer("userId").references("user_id").inTable("Users").onDelete("CASCADE").onUpdate("CASCADE")
         followings.integer("following_id")
       });
 };
