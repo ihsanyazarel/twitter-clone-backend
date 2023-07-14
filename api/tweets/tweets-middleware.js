@@ -37,10 +37,11 @@ const pyldVld = (req,res,next) => {
 // create tweet
 const createPyldVld = (req,res,next) => {
     try {
-        const {tweetContent, user_id} = req.body; // user_id tokendan alınacak
+        const {tweetContent} = req.body;
         if(tweetContent){
             const newTweet = {
-                tweetContent: req.body.tweetContent
+                tweetContent: req.body.tweetContent,
+                user_id: req.decodedToken.user_id
             };
             req.newTweet = newTweet;
             next()

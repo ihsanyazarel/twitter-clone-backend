@@ -37,10 +37,11 @@ const pyldVld = (req,res,next) => {
 // create comment
 const createPyldVld = (req,res,next) => {
     try {
-        const {commentContent, user_id} = req.body; // user_id tokendan alınacak
+        const {commentContent, user_id} = req.body; 
         if(commentContent){
             const newComment = {
-                commentContent: req.body.commentContent
+                commentContent: req.body.commentContent,
+                user_id: req.decodedToken.user_id
             };
             req.newComment = newComment;
             next()
