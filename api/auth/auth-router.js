@@ -13,7 +13,7 @@ const tokenGenerator = (user) => {
         userSurname: user.userSurname,
         role: user.role
     };
-    const token = jwt.sign(newUser, JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign(newUser, JWT_SECRET, { expiresIn: 60 });
     return token;
 }
 
@@ -41,6 +41,10 @@ router.post("/register", authMw.registerPayloadVld, authMw.isNickNameExistInDb,a
 router.post("/login", authMw.loginPayloadVld, authMw.passwordVld, async (req,res,next) => {
     try {
         const token = tokenGenerator(req.user);
+        await db("TokenList").insert({token: token.split(".")[2]});
+        setTimeout(async() => {
+            await db("TokenList").where("token", token.split(".")[2]).delete()
+        }, 1000*60);
         res.json({message: `Hoşgeldin ${req.user.userName}, kullanıcı girişi başarılı.`, token: token});
     } catch (error) {
         next(error);
@@ -65,13 +69,8 @@ router.post("/password/reset", async (req,res,next) => {
 router.get("/logout", authMw.restricted, async (req,res,next) => {
     try {
         // await db("TokenBlackList").insert({token: req.headers.authorization});
-        const tokenSecret = req.headers.authorization.split(".")[2];
-        authMw.tokenBlackList.push(tokenSecret);
-        const timeOut = (Number(req.decodedToken.exp)*1000)- Number(new Date().getTime());
-        setTimeout(async () => {
-            authMw.tokenBlackList = authMw.tokenBlackList.filter(item => item !== tokenSecret);
-            // await db("TokenBlackList").where("token", req.headers.authorization).delete();
-        }, timeOut);
+        // const tokenSecret = req.headers.authorization.split(".")[2];
+        await db("TokenList").where("token", req.headers.authorization.split(".")[2]).delete()
         res.json({message: "Logout başarılı"})
     } catch (error) {
         next(error);

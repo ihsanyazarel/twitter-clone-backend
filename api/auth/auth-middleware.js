@@ -3,7 +3,6 @@ const bcyrptjs = require("bcryptjs");
 const userModel = require("../users/users-model");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../../config/index");
-const tokenBlackList = [];
 const registerPayloadVld = (req, res, next) => {
   try {
     const {nickName, userEmail, userName, userSurname, password, secretQuestion} = req.body;
@@ -79,14 +78,12 @@ const passwordVld = async (req, res, next) => {
   }
 };
 
-const restricted = (req, res, next) => {
+const restricted = async (req, res, next) => {
   try {
     const sentToken = req.headers.authorization;
     if (sentToken) {
-      const tokenSecret = sentToken.split(".")[2];
-      if (tokenBlackList.filter((item) => item == tokenSecret).length > 0) {
-        res.status(400).json({ message: "Token geçersiz!" });
-      } else {
+      const isTokenInDb = await db("TokenList").where("token", sentToken.split(".")[2]).first()
+      if(isTokenInDb){
         jwt.verify(sentToken, JWT_SECRET, (err, decodedToken) => {
           if (err) {
             res.status(400).json({ message: "Token geçersiz!" });
@@ -95,6 +92,9 @@ const restricted = (req, res, next) => {
             next();
           }
         });
+      }
+      else{
+        res.status(400).json({ message: "Login olup geçerli bir token göndermeniz gerekmektedir!" });
       }
     } else {
       res.status(400).json({ message: "Token bilgisi gereklidir!" });
@@ -124,6 +124,5 @@ module.exports = {
   loginPayloadVld,
   passwordVld,
   restricted,
-  tokenBlackList,
   isAdmin
 };
