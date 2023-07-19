@@ -13,7 +13,7 @@ const tokenGenerator = (user) => {
         userSurname: user.userSurname,
         role: user.role
     };
-    const token = jwt.sign(newUser, JWT_SECRET, { expiresIn: 60 });
+    const token = jwt.sign(newUser, JWT_SECRET, { expiresIn: "1h" });
     return token;
 }
 
@@ -44,7 +44,7 @@ router.post("/login", authMw.loginPayloadVld, authMw.passwordVld, async (req,res
         await db("TokenList").insert({token: token.split(".")[2]});
         setTimeout(async() => {
             await db("TokenList").where("token", token.split(".")[2]).delete()
-        }, 1000*60);
+        }, 1000*60*60);
         res.json({message: `Hoşgeldin ${req.user.userName}, kullanıcı girişi başarılı.`, token: token});
     } catch (error) {
         next(error);
