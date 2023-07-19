@@ -62,7 +62,11 @@ const users = [{
 
 
 exports.seed = async function(knex) {
-  return knex('Users').insert(users);
+  return knex('Users')
+  .truncate()
+  .then(function() {
+    return knex('Users').insert(users);
+  });
 };
 
 exports.users = users;
