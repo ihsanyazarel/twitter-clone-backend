@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { getAllComments, getCommentById, getCommentsOfTweet, updateComment, deleteComment, createComment } = require("./comments-model");
 const commentsMw = require("./comments-middleware");
 const tweetsMw = require("../tweets/tweets-middleware");
-const { isAdmin } = require("../Auth/auth-middleware");
+const { isAdmin } = require("../auth/auth-middleware");
 
 
 // get all comments - available for just admin
