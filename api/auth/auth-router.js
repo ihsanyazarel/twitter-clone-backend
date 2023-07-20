@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcyrptjs = require("bcryptjs");
 const db = require("../../data/data-config");
 const {JWT_SECRET} = require("../../config/index");
+const tokenHelper = require("../../token-helper/token-helper")
 
 const tokenGenerator = (user) => {
     const newUser = {
@@ -41,10 +42,11 @@ router.post("/register", authMw.registerPayloadVld, authMw.isNickNameExistInDb,a
 router.post("/login", authMw.loginPayloadVld, authMw.passwordVld, async (req,res,next) => {
     try {
         const token = tokenGenerator(req.user);
-        await db("TokenList").insert({token: token.split(".")[2]});
-        setTimeout(async() => {
-            await db("TokenList").where("token", token.split(".")[2]).delete()
-        }, 1000*60*60);
+        // await db("TokenList").insert({token: token.split(".")[2]});
+        await tokenHelper.setToken(token.split(".")[2])
+        // setTimeout(async() => {
+        //     await db("TokenList").where("token", token.split(".")[2]).delete()
+        // }, 1000*60*60);
         res.json({message: `Hoşgeldin ${req.user.userName}, kullanıcı girişi başarılı.`, token: token});
     } catch (error) {
         next(error);
@@ -70,7 +72,9 @@ router.get("/logout", authMw.restricted, async (req,res,next) => {
     try {
         // await db("TokenBlackList").insert({token: req.headers.authorization});
         // const tokenSecret = req.headers.authorization.split(".")[2];
-        await db("TokenList").where("token", req.headers.authorization.split(".")[2]).delete()
+
+        // await db("TokenList").where("token", req.headers.authorization.split(".")[2]).delete()
+        await tokenHelper.deleteToken(req.headers.authorization.split(".")[2])
         res.json({message: "Logout başarılı"})
     } catch (error) {
         next(error);

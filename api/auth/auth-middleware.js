@@ -3,6 +3,8 @@ const bcyrptjs = require("bcryptjs");
 const userModel = require("../users/users-model");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../../config/index");
+const tokenHelper = require("../../token-helper/token-helper")
+
 const registerPayloadVld = (req, res, next) => {
   try {
     const {nickName, userEmail, userName, userSurname, password, secretQuestion} = req.body;
@@ -82,7 +84,8 @@ const restricted = async (req, res, next) => {
   try {
     const sentToken = req.headers.authorization;
     if (sentToken) {
-      const isTokenInDb = await db("TokenList").where("token", sentToken.split(".")[2]).first()
+      // const isTokenInDb = await db("TokenList").where("token", sentToken.split(".")[2]).first()
+      const isTokenInDb = await tokenHelper.getToken(sentToken.split(".")[2])
       if(isTokenInDb){
         jwt.verify(sentToken, JWT_SECRET, (err, decodedToken) => {
           if (err) {

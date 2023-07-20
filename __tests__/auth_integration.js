@@ -17,11 +17,6 @@ describe("---------- LOGIN ----------", () => {
     expect(res.body.message).toBe(
       "Hoşgeldin İhsan, kullanıcı girişi başarılı."
     );
-    const tokenSecret = res.body.token.split(".")[2];
-    const tokenSecretDb = await db("TokenList")
-      .where("token", tokenSecret)
-      .first();
-    expect(tokenSecret).toBe(tokenSecretDb.token);
   });
 
   test("2 - user can login with userEmail", async () => {
@@ -30,11 +25,6 @@ describe("---------- LOGIN ----------", () => {
     expect(res.body.message).toBe(
       "Hoşgeldin İhsan, kullanıcı girişi başarılı."
     );
-    const tokenSecret = res.body.token.split(".")[2];
-    const tokenSecretDb = await db("TokenList")
-      .where("token", tokenSecret)
-      .first();
-    expect(tokenSecret).toBe(tokenSecretDb.token);
   });
 
   test("3 - user can not login with wrong password", async () => {
