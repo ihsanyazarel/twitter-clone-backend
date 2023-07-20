@@ -15,12 +15,28 @@ module.exports = {
       directory: "./data/seeds"
     },
     useNullDefault: true,
-    // freign_key kontrolünü, her bir tablodaki foreign key'lerin birbirini görebilmesi ve devreye almak için aşağıdaki kod gerekli:
-    // eğer söz konusu "pool" bölümünü yapmazsak, her bir tablo birbirinden bağımsız tablolar olarak algılanacaktır.
     pool: {
       afterCreate: (conn, done) => {
-        // sqlite engine'e bağlandığımızda aşağıdaki kod çalışacak:
-        conn.run('PRAGMA foreign_keys = ON', done); // foreign_key kullanımını açmaya zorlayacak
+        conn.run('PRAGMA foreign_keys = ON', done); 
+      },
+    },
+  },
+
+  production: {
+    client: 'sqlite3',
+    connection: {
+      filename: './data/twitterdb.db3'
+    },
+    migrations: {
+      directory: "./data/migrations"
+    },
+    seeds: {
+      directory: "./data/seeds"
+    },
+    useNullDefault: true,
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run('PRAGMA foreign_keys = ON', done); 
       },
     },
   },
@@ -37,12 +53,9 @@ module.exports = {
       directory: "./data/seeds"
     },
     useNullDefault: true,
-    // freign_key kontrolünü, her bir tablodaki foreign key'lerin birbirini görebilmesi ve devreye almak için aşağıdaki kod gerekli:
-    // eğer söz konusu "pool" bölümünü yapmazsak, her bir tablo birbirinden bağımsız tablolar olarak algılanacaktır.
     pool: {
       afterCreate: (conn, done) => {
-        // sqlite engine'e bağlandığımızda aşağıdaki kod çalışacak:
-        conn.run('PRAGMA foreign_keys = ON', done); // foreign_key kullanımını açmaya zorlayacak
+        conn.run('PRAGMA foreign_keys = ON', done);
       },
     },
   }
