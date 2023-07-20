@@ -38,7 +38,7 @@ const isAdminOrLoggedInUser = (req,res,next)=>{
          if(req.decodedToken.role == "Admin" || req.params.id == req.decodedToken.user_id){
             next()
          } else {
-            res.status(400).json({message: "Yetkiniz yok!"})
+            res.status(403).json({message: "Yetkiniz yok!"})
          }
     } catch (error) {
         next(error)

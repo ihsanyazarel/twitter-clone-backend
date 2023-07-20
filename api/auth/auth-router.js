@@ -33,7 +33,7 @@ router.post("/register", authMw.registerPayloadVld, authMw.isNickNameExistInDb,a
         user.password = hashedPassword;
         user.secretQuestion = hashedSecretQuestion;
         await db("Users").insert(user);
-        res.json({message: "Kullanıcı başarı ile kaydedildi..."})
+        res.status(201).json({message: "Kullanıcı başarı ile kaydedildi..."})
     } catch (error) {
         next(error);
     }
@@ -60,9 +60,9 @@ router.post("/password/reset", async (req,res,next) => {
             const hashedPassword = bcyrptjs.hashSync(req.body.password, 10);
             user.password = hashedPassword;
             await db("Users").where("userEmail", req.body.userEmail).update(user);
-            res.json({message: "Şifre başarılı bir şekilde değiştirilmiştir..."});
+            res.status(201).json({message: "Şifre başarılı bir şekilde değiştirilmiştir..."});
         }else {
-            res.json({message: "Gizli soru yanlış!"})
+            res.status(400).json({message: "Gizli soru yanlış!"})
         }
     } catch (error) {
         next(error);

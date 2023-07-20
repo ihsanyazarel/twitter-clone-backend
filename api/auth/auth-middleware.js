@@ -22,7 +22,7 @@ const isNickNameExistInDb = async (req, res, next) => {
   try {
     const user = await db("Users").where("nickName", req.body.nickName).first();
     if (user) {
-      res.json({ message: "Kullanıcı adı daha önce alınmış!" });
+      res.status(400).json({ message: "Kullanıcı adı daha önce alınmış!" });
     } else {
       next();
     }
@@ -37,7 +37,7 @@ const isEmailExistInDb = async (req, res, next) => {
       .where("userEmail", req.body.userEmail)
       .first();
     if (user) {
-      res.json({ message: "Email daha önce alınmış!" });
+      res.status(400).json({ message: "Email daha önce alınmış!" });
     } else {
       next();
     }
@@ -113,7 +113,7 @@ const isAdmin = (req,res,next)=>{
        if(req.decodedToken.role == "Admin"){
           next()
        } else {
-          res.status(400).json({message: "Yetkiniz yok!"})
+          res.status(403).json({message: "Yetkiniz yok!"})
        }
   } catch (error) {
       next(error)
