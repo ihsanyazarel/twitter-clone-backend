@@ -68,10 +68,10 @@ const passwordVld = async (req, res, next) => {
         req.user = user;
         next();
       } else {
-        res.json({ message: "Kullanıcı adı veya şifre hatalı!" });
+        res.status(400).json({ message: "Kullanıcı adı veya şifre hatalı!" });
       }
     } else {
-      res.json({ message: "Kullanıcı bilgisi bulunamadı!" });
+      res.status(400).json({ message: "Kullanıcı adı veya şifre hatalı!" });
     }
   } catch (error) {
     next(error);
