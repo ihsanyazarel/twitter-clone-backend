@@ -1,0 +1,709 @@
+{
+	"info": {
+		"_postman_id": "7851643d-423c-46d3-9703-ebb91c3ffd98",
+		"name": "S16-Backend-Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27121583"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"nickName\": \"test\", \r\n\"password\": \"1234\",\r\n\"userEmail\": \"test@mail.com\", \r\n\"userName\": \"testName\",\r\n\"secretQuestion\" : \"Secret Question: Secret Answer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJuaWNrTmFtZSI6InRlc3QiLCJ1c2VyTmFtZSI6InRlc3ROYW1lIiwidXNlclN1cm5hbWUiOiJ0ZXN0U3VybmFtZSIsImlhdCI6MTY4OTA3MzQ4MiwiZXhwIjoxNjg5MDg0MjgyfQ.ejYaxw0BxfpkHZd-yxch3pwxx4VBdvHjzzsZsHuY_W0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"password\": \"1234\",\r\n\"nickName\": \"ihsanyazarel\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"password\": \"1234\",\r\n\"userEmail\": \"ihsanyazarel@hotmail.com\", \r\n\"secretQuestion\" : \"Secret Question: Secret Answer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/auth/password/reset",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"auth",
+								"password",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuaWNrTmFtZSI6Imloc2FueWF6YXJlbCIsInVzZXJOYW1lIjoixLBoc2FuIiwidXNlclN1cm5hbWUiOiJZYXphcmVsIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNjg5Mzg1MzAyLCJleHAiOjE2ODkzODUzNjJ9.cAH0jOIv3-P-2bSw8cpSyf5rea-VKETiF0oKUMRsgi4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9001/api/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "get all users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuaWNrTmFtZSI6Imloc2FueWF6YXJlbCIsInVzZXJOYW1lIjoixLBoc2FuIiwidXNlclN1cm5hbWUiOiJZYXphcmVsIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNjg5NDk5NzMxLCJleHAiOjE2ODk1MDMzMzF9.5zwITft-0vxichYZHkawvNk6esKdT5D60JMiNrnP4fI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9001/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user with tweets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuaWNrTmFtZSI6Imloc2FueWF6YXJlbCIsInVzZXJOYW1lIjoixLBoc2FuIiwidXNlclN1cm5hbWUiOiJZYXphcmVsIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNjg5NDk5NzMxLCJleHAiOjE2ODk1MDMzMzF9.5zwITft-0vxichYZHkawvNk6esKdT5D60JMiNrnP4fI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9001/api/users/tweets/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"users",
+								"tweets",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuaWNrTmFtZSI6Imloc2FueWF6YXJlbCIsInVzZXJOYW1lIjoixLBoc2FuIiwidXNlclN1cm5hbWUiOiJZYXphcmVsIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNjg5ODY2NzMzLCJleHAiOjE2ODk4NzAzMzN9.d5AZ4jXxm_5FEHpMXjwd1QsXJ_RMhEAj4-amFu_oN0Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9001/api/users/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJuaWNrTmFtZSI6InN0b3JhbWFuIiwidXNlck5hbWUiOiJTZXJrYW4yIiwidXNlclN1cm5hbWUiOiJUb3JhbWFuIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODk4NjcwMTcsImV4cCI6MTY4OTg3MDYxN30.SgAwSh_ANHYx9-JSsT9F80UW97l78vKF48FZYT8BzOA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nickName\": \"storaman\",\r\n        \"userName\": \"Serkan2\",\r\n        \"userSurname\": \"Toraman\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/users/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJuaWNrTmFtZSI6ImZlbmVybGkiLCJ1c2VyTmFtZSI6IllhxZ9hciIsInVzZXJTdXJuYW1lIjoiTXVzbHUiLCJyb2xlIjoiVXNlciIsImlhdCI6MTY4OTM4NTQzNCwiZXhwIjoxNjg5Mzg1NDk0fQ.0bXAirSvss_rsWjOBujcs8SgLaxlkJm8haf1LyUePSc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9001/api/users/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"users",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tweets",
+			"item": [
+				{
+					"name": "get all tweets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuaWNrTmFtZSI6Imloc2FueWF6YXJlbCIsInVzZXJOYW1lIjoixLBoc2FuIiwidXNlclN1cm5hbWUiOiJZYXphcmVsIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNjg5ODczOTY1LCJleHAiOjE2ODk4Nzc1NjV9.INY-F4UfNX0DGiaxdEi-uAPbmEcClcS_nhK2sf_-zCU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9001/api/tweets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"tweets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get tweet by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuaWNrTmFtZSI6Imloc2FueWF6YXJlbCIsInVzZXJOYW1lIjoixLBoc2FuIiwidXNlclN1cm5hbWUiOiJZYXphcmVsIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNjg5NTAwMTU2LCJleHAiOjE2ODk1MDM3NTZ9.Mw3oXnLrKyl1ye0bf_P1VOKLKyqaeL0ksBC8MS-HGYg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/tweets/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"tweets",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get tweets of user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJuaWNrTmFtZSI6ImhheXRhYyIsInVzZXJOYW1lIjoiQXl0YcOnIiwidXNlclN1cm5hbWUiOiLFnmFoaW4iLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE2ODkyNTkzNjQsImV4cCI6MTY4OTI3MDE2NH0._bmtReFexweOALTzrdjWyhu4b3YSp8FktB-dcYUp42Y",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9001/api/tweets/user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"tweets",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get tweets of user's home",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJuaWNrTmFtZSI6InN0b3JhbWFuIiwidXNlck5hbWUiOiJTZXJrYW4yIiwidXNlclN1cm5hbWUiOiJUb3JhbWFuIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODk4NzI3MzcsImV4cCI6MTY4OTg3NjMzN30.2pu0nyS6YAuBLPo-SMgu43dt1HT3bfx-euvmzEauqIg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9001/api/tweets/home/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"tweets",
+								"home",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update tweet",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJuaWNrTmFtZSI6InN0b3JhbWFuIiwidXNlck5hbWUiOiJTZXJrYW4yIiwidXNlclN1cm5hbWUiOiJUb3JhbWFuIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODk4NzI3MzcsImV4cCI6MTY4OTg3NjMzN30.2pu0nyS6YAuBLPo-SMgu43dt1HT3bfx-euvmzEauqIg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tweetContent\": \"Tweet-10 Serkan tarafından oluşturuldu. gvmadşlgfmlşa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/tweets/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"tweets",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create tweet",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJuaWNrTmFtZSI6InN0b3JhbWFuIiwidXNlck5hbWUiOiJTZXJrYW4yIiwidXNlclN1cm5hbWUiOiJUb3JhbWFuIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODk4NzI3MzcsImV4cCI6MTY4OTg3NjMzN30.2pu0nyS6YAuBLPo-SMgu43dt1HT3bfx-euvmzEauqIg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tweetContent\": \"Tweet-10 Serkan tarafından oluşturuldu.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/tweets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"tweets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete tweet",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJuaWNrTmFtZSI6ImF5c2VndWxiYXMiLCJ1c2VyTmFtZSI6IkF5xZ9lZ8O8bCIsInVzZXJTdXJuYW1lIjoiQmHFnyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjg5Mjk2NzIxLCJleHAiOjE2ODkzMDAzMjF9.vJqFkU-Uh7i-YZX_8s916SG0IVvueDOBNT_5bnsSKpQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9001/api/tweets/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"tweets",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "comments",
+			"item": [
+				{
+					"name": "get all comments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJuaWNrTmFtZSI6ImhheXRhYyIsInVzZXJOYW1lIjoiQXl0YcOnIiwidXNlclN1cm5hbWUiOiLFnmFoaW4iLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE2ODkyNTkzNjQsImV4cCI6MTY4OTI3MDE2NH0._bmtReFexweOALTzrdjWyhu4b3YSp8FktB-dcYUp42Y",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9001/api/comments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get comment by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuaWNrTmFtZSI6Imloc2FueWF6YXJlbCIsInVzZXJOYW1lIjoixLBoc2FuIiwidXNlclN1cm5hbWUiOiJZYXphcmVsIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNjg5MzU2MTAyLCJleHAiOjE2ODkzNTk3MDJ9.LOzvYzQuV-WZJl1mLgpb6oY_0bo5F5gkE14vLT7Lm7Q",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/comments/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get comments of tweet",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuaWNrTmFtZSI6Imloc2FueWF6YXJlbCIsInVzZXJOYW1lIjoixLBoc2FuIiwidXNlclN1cm5hbWUiOiJZYXphcmVsIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNjg5MzYwMTU0LCJleHAiOjE2ODkzNjM3NTR9.fDHh8LjSOKURpoFUF93umchaH9H0IxJUmu2dKnNIE38",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9001/api/comments/tweet/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"comments",
+								"tweet",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update comment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJuaWNrTmFtZSI6ImhheXRhYyIsInVzZXJOYW1lIjoiQXl0YcOnIiwidXNlclN1cm5hbWUiOiLFnmFoaW4iLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE2ODkyNTkzNjQsImV4cCI6MTY4OTI3MDE2NH0._bmtReFexweOALTzrdjWyhu4b3YSp8FktB-dcYUp42Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"commentContent\": \"comment 1 test\",\r\n    \"numberOfLikes\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/comments/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuaWNrTmFtZSI6Imloc2FueWF6YXJlbCIsInVzZXJOYW1lIjoixLBoc2FuIiwidXNlclN1cm5hbWUiOiJZYXphcmVsIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNjg5MzA2NDYxLCJleHAiOjE2ODkzMTAwNjF9.4Us-eI7tYQarNwHySRG4ScFUEc3oP0tnY8SImRqJJAs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"commentContent\": \"comment-10 İhsan tarafından oluşturuldu.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9001/api/comments/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"comments",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete comment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJuaWNrTmFtZSI6ImhheXRhYyIsInVzZXJOYW1lIjoiQXl0YcOnIiwidXNlclN1cm5hbWUiOiLFnmFoaW4iLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE2ODkyNTkzNjQsImV4cCI6MTY4OTI3MDE2NH0._bmtReFexweOALTzrdjWyhu4b3YSp8FktB-dcYUp42Y",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9001/api/comments/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"comments",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
