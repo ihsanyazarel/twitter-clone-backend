@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { getAllTweets, getTweetById, getTweetsOfUser, getTweetsOfUserWithFollowings, updateTweet, deleteTweet, createTweet } = require("./tweets-model");
 const tweetsMw = require("./tweets-middleware");
 const userMw = require("../users/users-middleware");
-const { isAdmin } = require("../Auth/auth-middleware");
+const { isAdmin } = require("../auth/auth-middleware");
 
 // get all tweets - available for just admin
 router.get("/", isAdmin, async (req,res,next)=>{
