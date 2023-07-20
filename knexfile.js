@@ -25,6 +25,7 @@ module.exports = {
   production: {
     client: 'sqlite3',
     connection: {
+      host: 'https://ihsan-twitter-backend.onrender.com/',
       filename: './data/twitterdb.db3'
     },
     migrations: {
