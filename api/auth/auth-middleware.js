@@ -84,7 +84,6 @@ const restricted = async (req, res, next) => {
   try {
     const sentToken = req.headers.authorization;
     if (sentToken) {
-      // const isTokenInDb = await db("TokenList").where("token", sentToken.split(".")[2]).first()
       const isTokenInDb = await tokenHelper.getToken(sentToken.split(".")[2])
       if(isTokenInDb){
         jwt.verify(sentToken, JWT_SECRET, (err, decodedToken) => {
